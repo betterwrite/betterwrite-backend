@@ -9,9 +9,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Laravel\Lumen\Auth\Authorizable;
-use PharIo\Manifest\Library;
 
-class User extends Model implements AuthenticatableContract, AuthorizableContract
+class Library extends Model implements AuthenticatableContract, AuthorizableContract
 {
     use Authenticatable, Authorizable, HasFactory;
 
@@ -21,20 +20,6 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
      * @var string[]
      */
     protected $fillable = [
-        'name', 'email',
+        'content'
     ];
-
-    /**
-     * The attributes excluded from the model's JSON form.
-     *
-     * @var string[]
-     */
-    protected $hidden = [
-        'password',
-    ];
-
-    public function libraries(): HasMany
-    {
-        return $this->hasMany(Library::class);
-    }
 }
