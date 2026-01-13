@@ -7,7 +7,7 @@ use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\hasOne;
 use Laravel\Lumen\Auth\Authorizable;
 
 class Library extends Model implements AuthenticatableContract, AuthorizableContract
@@ -20,6 +20,14 @@ class Library extends Model implements AuthenticatableContract, AuthorizableCont
      * @var string[]
      */
     protected $fillable = [
-        'content'
+        'title',
+        'level',
+        'currentLevel',
+        'user_id'
     ];
+
+    public function content(): hasOne
+    {
+        return $this->hasOne(Vault::class);
+    }
 }

@@ -15,3 +15,10 @@
 
 $router->post('user', 'UserController@post');
 $router->get('user/{id}', 'UserController@show');
+$router->delete('user/{id}', 'UserController@delete');
+
+$router->post('library/{id}', 'LibraryController@post');
+$router->get('library/{id}', 'LibraryController@show');
+$router->delete('library/{id}', 'LibraryController@delete');
+
+$router->get('vault/{id}', 'VaultController@show');
