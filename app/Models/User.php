@@ -33,8 +33,8 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         'password',
     ];
 
-    public function library()
+    public function libraries()
     {
-        return $this->hasOne(Library::class);
+        return $this->hasMany(Library::class);
     }
 }
