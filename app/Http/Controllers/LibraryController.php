@@ -58,6 +58,13 @@ class LibraryController extends Controller
 
     public function delete($id)
     {
-        return Library::delete($id);
+        $library = Library::find($id);
+
+        if ($library) {
+            $library->delete();
+            return response()->json(['message' => 'Item deleted successfully']);
+        } else {
+            return response()->json(['message' => 'Item not found'], 404);
+        }
     }
 }

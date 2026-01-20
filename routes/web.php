@@ -15,6 +15,7 @@
 
 $router->post('user', 'UserController@post');
 $router->get('user/{id}', 'UserController@show');
+$router->put('user/{id}', 'UserController@update');
 $router->delete('user/{id}', 'UserController@delete');
 
 $router->post('library/{id}', 'LibraryController@post');

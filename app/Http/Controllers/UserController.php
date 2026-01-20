@@ -44,4 +44,32 @@ class UserController extends Controller
 
         return response()->json(['message' => 'User created successfully', 'user' => $user], 201);
     }
+
+    public function delete($id)
+    {
+        $user = User::find($id);
+
+        if ($user) {
+            $user->delete();
+            return response()->json(['message' => 'Item deleted successfully']);
+        } else {
+            return response()->json(['message' => 'Item not found'], 404);
+        }
+    }
+
+    public function update(Request $request, $id)
+    {
+        $this->validate($request, [
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|unique:users,email',
+            'password' => 'required|string|min:6'
+        ]);
+
+        $allInput = $request->all();
+
+        $user = User::find($id);
+        $user->update($allInput);
+
+        return response()->json(['status' => 'success', 'data' => $allInput]);
+    }
 }
