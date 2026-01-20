@@ -23,3 +23,4 @@ $router->get('library/{id}', 'LibraryController@show');
 $router->delete('library/{id}', 'LibraryController@delete');
 
 $router->get('vault/{id}', 'VaultController@show');
+$router->put('vault/{id}', 'VaultController@update');

@@ -20,4 +20,18 @@ class VaultController extends Controller
     {
         return Vault::findOrFail($id);
     }
+
+    public function update(Request $request, $id)
+    {
+       $this->validate($request, [
+            'content' => 'required',
+        ]);
+
+        $allInput = $request->all();
+
+        $vault = Vault::find($id);
+        $vault->update($allInput);
+
+        return response()->json(['status' => 'success', 'data' => $allInput]);
+    }
 }

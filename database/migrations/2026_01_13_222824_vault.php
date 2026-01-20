@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('library_id')->constrained()->onDelete('cascade'); // Foreign key to users table
             $table->jsonb('content');
+            $table->timestamps();
         });
     }
 
