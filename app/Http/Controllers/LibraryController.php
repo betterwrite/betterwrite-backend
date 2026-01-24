@@ -40,6 +40,8 @@ class LibraryController extends Controller
     {
         $this->validate($request, [
             'title' => 'required|string',
+            'level' => 'required|string',
+            'acc' => 'required|string',
             'content' => 'required'
         ]);
 
@@ -51,6 +53,8 @@ class LibraryController extends Controller
 
         $library = Library::create([
             'title' => $request->input('title'),
+            'level' =>  $request->input('level'),
+            'acc' =>  $request->input('acc'),
             'user_id' => $id
         ]);
 
