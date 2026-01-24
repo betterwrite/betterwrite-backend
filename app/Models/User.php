@@ -17,20 +17,12 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 
     /**
      * The attributes that are mass assignable.
+     * TODO: password
      *
      * @var string[]
      */
     protected $fillable = [
-        'name', 'email',
-    ];
-
-    /**
-     * The attributes excluded from the model's JSON form.
-     *
-     * @var string[]
-     */
-    protected $hidden = [
-        'password',
+        'name', 'email', 'password', 'level', 'acc',
     ];
 
     public function libraries()

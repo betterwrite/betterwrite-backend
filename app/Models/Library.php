@@ -22,7 +22,7 @@ class Library extends Model implements AuthenticatableContract, AuthorizableCont
     protected $fillable = [
         'title',
         'level',
-        'currentLevel',
+        'acc',
         'user_id'
     ];
 

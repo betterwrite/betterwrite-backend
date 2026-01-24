@@ -30,30 +30,26 @@ class LibraryController extends Controller
     {
         $this->validate($request, [
             'title' => 'required|string',
-            'user_id' => 'required',
-            'content' => 'required',
-            'library_id' => 'required'
+            'content' => 'required'
         ]);
 
-        $user = User::show($id);
+        $user = User::find($id);
 
         if(!$user) {
             return response()->json(['status' => 'fail'], 401);
         }
 
         $library = Library::create([
-            'id' => Auth::id(),
             'title' => $request->input('title'),
             'user_id' => $id
         ]);
 
         $vault = Vault::create([
-            'id' => Auth::id(),
             'content' => $request->input('content'),
             'library_id' => $library->id
         ]);
 
-        return response()->json(['message' => 'Items created successfully', 'user' => $user, 'library' => $library, 'vault' => $vault], 201);
+        return response()->json(['message' => 'Items created successfully', 'library' => $library, 'vault' => $vault], 201);
     }
 
     public function delete($id)

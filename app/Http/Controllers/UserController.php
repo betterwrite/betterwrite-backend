@@ -4,20 +4,32 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
     /**
-     * Retrieve the user for the given ID.
      *
-     * @param  int  $id
      * @return Response
      */
-    public function show($id)
+    public function show(Request $request)
     {
-        return User::findOrFail($id);
+        $this->validate($request, [
+            'email' => 'required|string',
+            'password' => 'required|string|min:6'
+        ]);
+
+        $user = User::where('email', $request->get('email'))->first();
+
+        if(!$user) {
+            return response()->json(['message' => 'Item not found'], 404);
+        }
+
+        if(Hash::check($request->get('password'), $user->password)) {
+           return response()->json(['message' => 'User get', 'user' => $user], 201);
+        }
+
+        return response()->json(['message' => 'Password wrong'], 404);
     }
 
     /**
@@ -34,7 +46,6 @@ class UserController extends Controller
         ]);
 
         $user = User::create([
-            'id' => Auth::id(),
             'name' => $request->input('name'),
             'email' => $request->input('email'),
             'password' => Hash::make($request->input('password')),
@@ -45,16 +56,25 @@ class UserController extends Controller
         return response()->json(['message' => 'User created successfully', 'user' => $user], 201);
     }
 
-    public function delete($id)
+    public function delete(Request $request, $id)
     {
-        $user = User::find($id);
+        $this->validate($request, [
+            'email' => 'required|string',
+            'password' => 'required|string|min:6'
+        ]);
 
-        if ($user) {
-            $user->delete();
-            return response()->json(['message' => 'Item deleted successfully']);
-        } else {
+        $user = User::where('email', $request->get('email'))->first();
+
+        if(!$user) {
             return response()->json(['message' => 'Item not found'], 404);
         }
+
+        if(Hash::check($request->get('password'), $user->password)) {
+            $user->delete();
+            return response()->json(['message' => 'Item deleted successfully']);
+        }
+
+        return response()->json(['message' => 'Password wrong'], 404);
     }
 
     public function update(Request $request, $id)
@@ -71,5 +91,12 @@ class UserController extends Controller
         $user->update($allInput);
 
         return response()->json(['status' => 'success', 'data' => $allInput]);
+    }
+
+    public function all()
+    {
+        $users = User::all();
+
+        return response()->json($users);
     }
 }
