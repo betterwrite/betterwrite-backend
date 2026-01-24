@@ -31,6 +31,16 @@ class LibraryController extends Controller
        }
     }
 
+    public function all($id) {
+        $libraries = Library::where('user_id', $id)->get();
+
+        if(!$libraries) {
+            return response()->json(['message' => 'Libraries not found'], 404);
+        }
+
+        return response()->json($libraries);
+    }
+
     /**
      * Post a new user.
      *
