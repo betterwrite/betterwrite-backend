@@ -6,7 +6,6 @@ use App\Models\Library;
 use App\Models\User;
 use App\Models\Vault;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class LibraryController extends Controller
 {
@@ -18,7 +17,18 @@ class LibraryController extends Controller
      */
     public function show($id)
     {
-        return Library::findOrFail($id);
+       $library = Library::find($id);
+       if($library) {
+            $vault = Vault::find($library->id);
+
+            if($vault) {
+                return response()->json(['message' => 'Library items and content!', 'vault' => $vault, 'library' => $library], 200);
+            } else {
+                return response()->json(['status' => 'fail'], 401);
+            }
+       } else {
+            return response()->json(['status' => 'fail'], 401);
+       }
     }
 
     /**

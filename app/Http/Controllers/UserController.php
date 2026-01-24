@@ -56,25 +56,16 @@ class UserController extends Controller
         return response()->json(['message' => 'User created successfully', 'user' => $user], 201);
     }
 
-    public function delete(Request $request, $id)
+    public function delete($id)
     {
-        $this->validate($request, [
-            'email' => 'required|string',
-            'password' => 'required|string|min:6'
-        ]);
+        $user = User::find($id);
 
-        $user = User::where('email', $request->get('email'))->first();
-
-        if(!$user) {
-            return response()->json(['message' => 'Item not found'], 404);
-        }
-
-        if(Hash::check($request->get('password'), $user->password)) {
+        if ($user) {
             $user->delete();
             return response()->json(['message' => 'Item deleted successfully']);
+        } else {
+            return response()->json(['message' => 'Item not found'], 404);
         }
-
-        return response()->json(['message' => 'Password wrong'], 404);
     }
 
     public function update(Request $request, $id)

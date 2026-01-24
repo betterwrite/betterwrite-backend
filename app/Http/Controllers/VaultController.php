@@ -2,11 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Library;
-use App\Models\User;
 use App\Models\Vault;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 
 class VaultController extends Controller
 {
@@ -30,8 +27,11 @@ class VaultController extends Controller
         $allInput = $request->all();
 
         $vault = Vault::find($id);
-        $vault->update($allInput);
-
-        return response()->json(['status' => 'success', 'data' => $allInput]);
+        if($vault) {
+            $vault->update($allInput);
+            return response()->json(['status' => 'success', 'data' => $allInput]);
+        } else {
+            return response()->json(['message' => 'Item not found'], 404);
+        }
     }
 }
