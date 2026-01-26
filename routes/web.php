@@ -13,11 +13,11 @@
 |
 */
 
-$router->post('user', 'UserController@post');
-$router->get('users', 'UserController@all');
-$router->get('user/{id}', 'UserController@show');
+$router->post('login', 'UserController@post');
+$router->get('user', 'UserController@show');
 $router->put('user/{id}', 'UserController@update');
 $router->delete('user/{id}', 'UserController@delete');
+$router->get('users', 'UserController@all');
 
 $router->post('library/{id}', 'LibraryController@post');
 $router->get('library/{id}', 'LibraryController@show');

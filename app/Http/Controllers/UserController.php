@@ -40,7 +40,7 @@ class UserController extends Controller
     public function post(Request $request)
     {
         $this->validate($request, [
-            'name' => 'required|string|max:255',
+            'name' => 'required|string|max:30',
             'email' => 'required|string|email|unique:users,email',
             'password' => 'required|string|min:6'
         ]);
@@ -71,7 +71,7 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'name' => 'required|string|max:255',
+            'name' => 'required|string|max:30',
             'email' => 'required|string|email|unique:users,email',
             'password' => 'required|string|min:6'
         ]);
