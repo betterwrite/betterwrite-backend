@@ -68,22 +68,6 @@ class UserController extends Controller
         }
     }
 
-    public function update(Request $request, $id)
-    {
-        $this->validate($request, [
-            'name' => 'required|string|max:30',
-            'email' => 'required|string|email|unique:users,email',
-            'password' => 'required|string|min:6'
-        ]);
-
-        $allInput = $request->all();
-
-        $user = User::find($id);
-        $user->update($allInput);
-
-        return response()->json(['status' => 'success', 'data' => $allInput]);
-    }
-
     public function all()
     {
         $users = User::all();
