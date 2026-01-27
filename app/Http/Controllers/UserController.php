@@ -47,8 +47,12 @@ class UserController extends Controller
 
         $userExists = User::where('email', $request->get('email'))->first();
 
-        if($userExists) {
+        if($userExists && Hash::check($request->get('password'), $userExists->password)) {
             return response()->json(['message' => 'User loaded successfully', 'user' => $userExists]);
+        }
+
+        if($userExists) {
+            return response()->json(['message' => 'Password is wrong'], 404);
         }
 
         $user = User::create([
