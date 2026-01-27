@@ -14,8 +14,9 @@
 */
 
 $router->post('login', 'UserController@post');
-$router->get('xp', 'UserController@level');
+$router->put('user/{id}', 'UserController@update');
 $router->get('user', 'UserController@show');
+$router->get('xp', 'UserController@level');
 /**$router->put('user/{id}', 'UserController@update');*/
 $router->delete('user/{id}', 'UserController@delete');
 /**$router->get('users', 'UserController@all');*/

@@ -73,6 +73,22 @@ class UserController extends Controller
 
         return response()->json($users);
     }
+    public function update(Request $request, $id)
+    {
+        $this->validate($request, [
+            'password' => 'required|string|min:6',
+        ]);
+
+        $user = User::find($id);
+
+        if($user) {
+            $user->password = Hash::make($request->newPassword);
+            $user->save();
+            return response()->json(['message' => 'User password updated successfully', 'user' => $user]);
+        } else {
+            return response()->json(['message' => 'User not found'], 404);
+        }
+    }
     public function level(Request $request, $id)
     {
         $this->validate($request, [
