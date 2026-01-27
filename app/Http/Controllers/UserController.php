@@ -67,11 +67,58 @@ class UserController extends Controller
             return response()->json(['message' => 'Item not found'], 404);
         }
     }
-
     public function all()
     {
         $users = User::all();
 
         return response()->json($users);
+    }
+    public function level(Request $request, $id)
+    {
+        $this->validate($request, [
+            'level' => 'required|string',
+            'acc' => 'required|string',
+        ]);
+
+        $user = User::find($id);
+
+        if ($user) {
+            $acc = $request->input('acc');
+            $level = $request->input('level');
+
+            // TODO: All leves
+            $levels = [
+                '30',
+                '60',
+                '100',
+                '130',
+                '200',
+                '320',
+                '400',
+                '520',
+                '670',
+                '900',
+                '1090',
+                '1250',
+                '1510',
+                '1750'
+            ];
+
+            $act = (int)$level;
+
+            $levelAct = $levels[$act];
+            $levelNext = $levels[++$act];
+
+            if($levelAct - $levelNext <= $acc) {
+                // TODO: resolve acc in values
+                $user->level = (string)(1 + $act);
+                $user->acc = '0';
+                $user->save();
+            }
+
+            return response()->json(['message' => 'User level updated successfully']);
+        } else {
+            return response()->json(['message' => 'User not found'], 404);
+        }
     }
 }
