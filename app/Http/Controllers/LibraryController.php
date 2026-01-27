@@ -42,7 +42,7 @@ class LibraryController extends Controller
     }
 
     /**
-     * Post a new user.
+     * Post a new library or update.
      *
      * @return Response
      */
@@ -57,6 +57,23 @@ class LibraryController extends Controller
 
         if(!$user) {
             return response()->json(['status' => 'fail'], 401);
+        }
+
+        $existsLibraries = Library::where('user_id', $id);
+
+        foreach ($existsLibraries as $existsLibrary) {
+            if($existsLibrary->title === $request->input('title')) {
+                $existsVault = Vault::where('library_id', $existsLibrary->id)->first();
+
+                if(!$existsVault) {
+                    return response()->json(['status' => 'fail'], 401);
+                }
+
+                $existsVault->content = $request->input('content');
+                $existsVault->save();
+
+                return response()->json(['message' => 'Items updated successfully', 'library' => $existsLibrary, 'vault' => $existsVault], 201);
+            }
         }
 
         $library = Library::create([
