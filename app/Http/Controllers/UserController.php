@@ -41,9 +41,15 @@ class UserController extends Controller
     {
         $this->validate($request, [
             'name' => 'required|string|max:30',
-            'email' => 'required|string|email|unique:users,email',
+            'email' => 'required|string|email',
             'password' => 'required|string|min:6'
         ]);
+
+        $userExists = User::where('email', $request->get('email'))->first();
+
+        if($userExists) {
+            return response()->json(['message' => 'User loaded successfully', 'user' => $userExists]);
+        }
 
         $user = User::create([
             'name' => $request->input('name'),
