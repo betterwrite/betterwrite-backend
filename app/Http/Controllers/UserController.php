@@ -112,13 +112,12 @@ class UserController extends Controller
             $dif = $levelAct - $levelNext;
 
             if($dif < $acc) {
-                // TODO: resolve acc in values
                 $user->level = (string)(1 + $act);
-                $user->acc = $acc - $dif;
+                $user->acc = (string)($acc - $dif);
                 $user->save();
             }
 
-            return response()->json(['message' => 'User level updated successfully']);
+            return response()->json(['message' => 'User updated successfully', 'user' => $user], 201);
         } else {
             return response()->json(['message' => 'User not found'], 404);
         }

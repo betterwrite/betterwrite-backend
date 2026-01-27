@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 class LibraryController extends Controller
 {
     /**
-     * Retrieve the user for the given ID.
+     * Retrieve the library for the given ID.
      *
      * @param  int  $id
      * @return Response
