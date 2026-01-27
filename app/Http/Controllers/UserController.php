@@ -82,7 +82,7 @@ class UserController extends Controller
         $user = User::find($id);
 
         if($user) {
-            $user->password = Hash::make($request->newPassword);
+            $user->password = Hash::make($request->password);
             $user->save();
             return response()->json(['message' => 'User password updated successfully', 'user' => $user]);
         } else {
