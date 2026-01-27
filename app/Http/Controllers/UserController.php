@@ -109,10 +109,12 @@ class UserController extends Controller
             $levelAct = $levels[$act];
             $levelNext = $levels[++$act];
 
-            if($levelAct - $levelNext <= $acc) {
+            $dif = $levelAct - $levelNext;
+
+            if($dif < $acc) {
                 // TODO: resolve acc in values
                 $user->level = (string)(1 + $act);
-                $user->acc = '0';
+                $user->acc = $acc - $dif;
                 $user->save();
             }
 
