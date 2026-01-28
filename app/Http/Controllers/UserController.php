@@ -101,17 +101,18 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'password' => 'required|string|min:6',
+            'prevPassword' => 'required|string|min:6',
+            'nextPassword' => 'required|string|min:6',
         ]);
 
         $user = User::find($id);
 
-        if($user) {
-            $user->password = Hash::make($request->password);
+        if($user && Hash::check($request->get('prevPassword'), $user->password)) {
+            $user->password = Hash::make($request->nextPassword);
             $user->save();
             return response()->json(['message' => 'User password updated successfully', 'user' => $user]);
         } else {
-            return response()->json(['message' => 'User not found'], 404);
+            return response()->json(['message' => 'User not found or wrong password'], 404);
         }
     }
     public function level(Request $request, $id)
