@@ -130,6 +130,7 @@ class UserController extends Controller
 
             // TODO: All leves
             $levels = [
+                '0',
                 '30',
                 '60',
                 '100',
