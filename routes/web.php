@@ -13,7 +13,8 @@
 |
 */
 
-$router->post('login', 'UserController@post');
+$router->post('login', 'UserController@login');
+$router->post('register', 'UserController@register');
 $router->put('user/{id}', 'UserController@update');
 $router->get('user', 'UserController@show');
 $router->get('xp', 'UserController@level');

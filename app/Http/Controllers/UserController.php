@@ -37,10 +37,9 @@ class UserController extends Controller
      *
      * @return Response
      */
-    public function post(Request $request)
+    public function login(Request $request)
     {
         $this->validate($request, [
-            'name' => 'required|string|max:30',
             'email' => 'required|string|email',
             'password' => 'required|string|min:6'
         ]);
@@ -52,7 +51,23 @@ class UserController extends Controller
         }
 
         if($userExists) {
-            return response()->json(['message' => 'Password is wrong'], 404);
+            return response()->json(['message' => 'Password is wrong'], 403);
+        } else {
+            return response()->json(['message' => 'User does not exist'], 404);
+        }
+    }
+    public function register(Request $request)
+    {
+        $this->validate($request, [
+            'name' => 'required|string',
+            'email' => 'required|string|email',
+            'password' => 'required|string|min:6'
+        ]);
+
+        $userExists = User::where('email', $request->get('email'))->first();
+
+        if($userExists) {
+            return response()->json(['message' => 'User exists'], 403);
         }
 
         $user = User::create([
@@ -63,7 +78,7 @@ class UserController extends Controller
             'acc' => '0',
         ]);
 
-        return response()->json(['message' => 'User created successfully', 'user' => $user], 201);
+        return response()->json(['message' => 'User create successfully', 'user' => $user], 201);
     }
 
     public function delete($id)
