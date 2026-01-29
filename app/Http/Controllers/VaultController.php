@@ -7,17 +7,6 @@ use Illuminate\Http\Request;
 
 class VaultController extends Controller
 {
-    /**
-     * Retrieve the user for the given ID.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function show($id)
-    {
-        return Vault::findOrFail($id);
-    }
-
     public function update(Request $request, $id)
     {
        $this->validate($request, [

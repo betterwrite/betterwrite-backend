@@ -4,15 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    /**
-     *
-     * @return Response
-     */
-    public function show(Request $request)
+    public function show(Request $request): JsonResponse
     {
         $this->validate($request, [
             'email' => 'required|string',
@@ -37,7 +34,7 @@ class UserController extends Controller
      *
      * @return Response
      */
-    public function login(Request $request)
+    public function login(Request $request): JsonResponse
     {
         $this->validate($request, [
             'email' => 'required|string|email',
@@ -56,7 +53,7 @@ class UserController extends Controller
             return response()->json(['message' => 'User does not exist'], 404);
         }
     }
-    public function register(Request $request)
+    public function register(Request $request): JsonResponse
     {
         $this->validate($request, [
             'name' => 'required|string',
@@ -81,7 +78,7 @@ class UserController extends Controller
         return response()->json(['message' => 'User create successfully', 'user' => $user], 201);
     }
 
-    public function delete($id)
+    public function delete($id): JsonResponse
     {
         $user = User::find($id);
 
@@ -92,13 +89,13 @@ class UserController extends Controller
             return response()->json(['message' => 'Item not found'], 404);
         }
     }
-    public function all()
+    public function all(): JsonResponse
     {
         $users = User::all();
 
         return response()->json($users);
     }
-    public function update(Request $request, $id)
+    public function update(Request $request, $id): JsonResponse
     {
         $this->validate($request, [
             'prevPassword' => 'required|string|min:6',
@@ -115,7 +112,7 @@ class UserController extends Controller
             return response()->json(['message' => 'User not found or wrong password'], 404);
         }
     }
-    public function level(Request $request, $id)
+    public function level(Request $request, $id): JsonResponse
     {
         $this->validate($request, [
             'level' => 'required|string',

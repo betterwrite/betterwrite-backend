@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Library;
 use App\Models\User;
 use App\Models\Vault;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class LibraryController extends Controller
@@ -15,7 +16,7 @@ class LibraryController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function show($id)
+    public function show($id): JsonResponse
     {
        $library = Library::find($id);
        if($library) {
@@ -31,7 +32,7 @@ class LibraryController extends Controller
        }
     }
 
-    public function all($id) {
+    public function all($id): JsonResponse {
         $libraries = Library::where('user_id', $id)->get();
 
         if(!$libraries) {
@@ -46,7 +47,7 @@ class LibraryController extends Controller
      *
      * @return Response
      */
-    public function post(Request $request, $id)
+    public function post(Request $request, $id): JsonResponse
     {
         $this->validate($request, [
             'title' => 'required|string',
@@ -89,7 +90,7 @@ class LibraryController extends Controller
         return response()->json(['message' => 'Items created successfully', 'library' => $library, 'vault' => $vault], 201);
     }
 
-    public function delete($id)
+    public function delete($id): JsonResponse
     {
         $library = Library::find($id);
 
